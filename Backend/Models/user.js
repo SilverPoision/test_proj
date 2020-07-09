@@ -1,5 +1,4 @@
 const mongo = require("mongoose");
-const { boolean } = require("@hapi/joi");
 
 const userSchema = new mongo.Schema({
   email: {

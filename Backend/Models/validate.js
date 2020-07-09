@@ -21,3 +21,12 @@ exports.forgot_Valid = (data) => {
   });
   return schema.validate(data);
 };
+
+exports.editUserSchema = (data) => {
+  const schema = joi.object({
+    email: joi.string().min(6).required().email(),
+    newemail: joi.string().min(6).required().email(),
+    password: joi.string().min(6).required(),
+  });
+  return schema.validate(data);
+};

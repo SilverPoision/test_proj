@@ -93,6 +93,7 @@ exports.login = catchAsync(async (req, res, next) => {
     {
       _id: user._id,
       changed: user.isPassReset,
+      isAdmin: user.isAdmin,
     },
     "gphgphgphgph",
     {

@@ -1,6 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
-const shopRoutes = require("./Routes/user");
+const userRoutes = require("./Routes/user");
+const adminRoutes = require("./Routes/admin");
 const app = express();
 const mongo = require("mongoose");
 
@@ -26,10 +27,11 @@ app.use(express.json());
 app.use(morgan("tiny"));
 
 //Router
-app.use("/api/", shopRoutes);
+app.use("/api/", userRoutes);
+app.use("/api/", adminRoutes);
 
 //404 error Handler
-app.use((req, res) => {
+app.use((_, res) => {
   return res.status(404).send("404 You are on a wrong way!!");
 });
 

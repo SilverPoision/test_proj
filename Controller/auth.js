@@ -205,6 +205,7 @@ exports.forgetValidate = catchAsync(async (req, res, next) => {
   }
   user.resetPasswordExpires = undefined;
   user.resetPasswordToken = undefined;
+  user.isPassReset = true;
 
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(req.body.password, salt);

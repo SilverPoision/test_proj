@@ -277,7 +277,6 @@ exports.caclDist = catchAsync(async (req, res, next) => {
       el.latitude,
       el.longitude
     );
-    console.log(km);
     if (km < 2) {
       arr.push({
         name: el.email.split("@")[0],
@@ -303,7 +302,7 @@ const dist = (la1, lo1, la2, lo2) => {
       Math.sin(dLon / 2) *
       Math.sin(dLon / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  const d = R * c; // Distance in km
+  const d = R * c;
   return d;
 };
 

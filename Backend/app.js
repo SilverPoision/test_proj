@@ -5,7 +5,7 @@ const adminRoutes = require("./Routes/admin");
 const app = express();
 const mongo = require("mongoose");
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 mongo.connect(
   "mongodb+srv://silverpoision:Silver@1671@test-proj.nknii.mongodb.net/user?retryWrites=true&w=majority",
@@ -57,7 +57,7 @@ app.use((err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
 
-  mode = "development";
+  mode = process.env.NODE_ENV;
 
   if (mode === "development") {
     sendErrorDev(err, res);

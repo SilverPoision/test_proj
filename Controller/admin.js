@@ -74,6 +74,8 @@ exports.editUser = catchAsync(async (req, res, next) => {
     email: req.body.email,
     newEmail: req.body.newemail,
     password: req.body.password,
+    latitude: req.body.latitude,
+    longitude: req.body.longitude,
   };
 
   const { error } = editUserSchema(req.body);
@@ -93,6 +95,10 @@ exports.editUser = catchAsync(async (req, res, next) => {
 
   user.email = data.newEmail;
   user.password = hashedPass;
+  if (data.latitude && data.longitude) {
+    user.latitude = data.latitude;
+    user.longitude = data.longitude;
+  }
   user.save();
   return res.status(200).send({
     success: true,

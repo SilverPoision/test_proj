@@ -27,6 +27,8 @@ exports.editUserSchema = (data) => {
     email: joi.string().min(6).required().email(),
     newemail: joi.string().min(6).required().email(),
     password: joi.string().min(6).required(),
+    latitude: joi.number(),
+    longitude: joi.number(),
   });
   return schema.validate(data);
 };

@@ -11,6 +11,7 @@ const {
   emailSchema,
   loginSchema,
   forgot_Valid,
+  lat_long,
 } = require("../Models/validate");
 
 const transport = nodemailer.createTransport({
@@ -58,7 +59,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     from: "silverpoision@gmail.com",
     to: req.body.email,
     subject: "Login to your Account!!",
-    html: `<h1>Here's Your Email and Password:</h1>
+    html: `<h1>Here's Your Email and Password Please reset your password to login fro the first time:</h1>
            <h3>Email: </h3>${req.body.email}
            <h3>Password: </h3>${password}`,
   };
@@ -229,11 +230,36 @@ exports.user = catchAsync(async (req, res, next) => {
     _id: user._id,
     isAdmin: user.isAdmin,
     email: user.email,
+    latitude: user.latitude,
+    longitude: user.longitude,
   };
 
   return res.status(200).send({
     success: true,
     error: false,
     user,
+  });
+});
+
+exports.setLat = catchAsync(async (req, res, next) => {
+  const { error } = lat_long(req.body);
+
+  if (error) {
+    return next(new AppError(error.details[0].message, 401));
+  }
+
+  const user = await User.findOne({ _id: req.user._id });
+  if (!user) {
+    return next(new AppError("No user found", 401));
+  }
+
+  user.latitude = req.body.latitude;
+  user.longitude = req.body.longitude;
+  user.save();
+
+  return res.status(200).send({
+    success: true,
+    error: false,
+    message: "Updated!",
   });
 });

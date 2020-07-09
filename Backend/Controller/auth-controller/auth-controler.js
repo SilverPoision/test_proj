@@ -15,6 +15,15 @@ module.exports = catchAsync(async (req, res, next) => {
     return next(new AppError("Unauthorized", 401));
   }
 
+  if (!verify.changed) {
+    return next(
+      new AppError(
+        "Please reset you password to login for the first time!!",
+        401
+      )
+    );
+  }
+
   const user = await User.findOne({ _id: verify._id });
 
   if (user.sessToken.indexOf(token) >= 0) {

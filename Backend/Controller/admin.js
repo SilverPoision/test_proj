@@ -49,7 +49,7 @@ exports.createUser = catchAsync(async (req, res, next) => {
   const user = new User(userTo);
   user.save();
 
-  res.send({
+  res.stats(200).send({
     success: true,
     error: false,
     message: "User Created and password sent to user's email!!",
@@ -90,7 +90,7 @@ exports.editUser = catchAsync(async (req, res, next) => {
   user.email = data.newEmail;
   user.password = hashedPass;
   user.save();
-  return res.send({
+  return res.status(200).send({
     success: true,
     error: false,
     message: "User Updated",
@@ -105,7 +105,7 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
   if (!user) {
     return next(new AppError("No user found", 401));
   }
-  return res.send({
+  return res.status(200).send({
     success: true,
     error: false,
     message: "User Updated",
@@ -129,7 +129,7 @@ exports.readUser = catchAsync(async (req, res, next) => {
     });
   });
 
-  return res.send({
+  return res.status(200).send({
     success: true,
     error: false,
     user: arr,

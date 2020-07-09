@@ -1,4 +1,5 @@
 const mongo = require("mongoose");
+const { string } = require("@hapi/joi");
 
 const userSchema = new mongo.Schema({
   email: {
@@ -33,6 +34,12 @@ const userSchema = new mongo.Schema({
   isPassReset: {
     type: Boolean,
     default: false,
+  },
+  latitude: {
+    type: String,
+  },
+  longitude: {
+    type: String,
   },
 });
 

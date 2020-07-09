@@ -30,3 +30,11 @@ exports.editUserSchema = (data) => {
   });
   return schema.validate(data);
 };
+
+exports.lat_long = (data) => {
+  const schema = joi.object({
+    latitude: joi.number().required(),
+    longitude: joi.number().required(),
+  });
+  return schema.validate(data);
+};

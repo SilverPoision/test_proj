@@ -7,6 +7,7 @@ router.post("/user/signup", auth.signup);
 router.post("/user/login", auth.login);
 router.post("/user/forgot", auth.forgotSend);
 router.post("/user/forgot/:id", auth.forgetValidate);
+router.post("/user/location", verifyAuth, auth.setLat);
 
 router.get("/user/logout", verifyAuth, auth.logout);
 router.get("/user", verifyAuth, auth.user);

@@ -1,5 +1,4 @@
 const express = require("express");
-const morgan = require("morgan");
 const userRoutes = require("./Routes/user");
 const adminRoutes = require("./Routes/admin");
 const app = express();

@@ -24,7 +24,6 @@ app.listen(port, (err) => {
 
 //Middlewares
 app.use(express.json());
-app.use(morgan("tiny"));
 
 //Router
 app.use("/api/", userRoutes);

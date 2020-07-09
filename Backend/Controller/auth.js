@@ -263,3 +263,48 @@ exports.setLat = catchAsync(async (req, res, next) => {
     message: "Updated!",
   });
 });
+
+exports.caclDist = catchAsync(async (req, res, next) => {
+  const currUser = await User.findOne({ _id: req.user._id });
+  const user = await User.find({ isAdmin: false });
+
+  const arr = [];
+
+  user.map((el) => {
+    const km = dist(
+      currUser.latitude,
+      currUser.longitude,
+      el.latitude,
+      el.longitude
+    );
+    console.log(km);
+    if (km < 2) {
+      arr.push({
+        name: el.email.split("@")[0],
+      });
+    }
+  });
+
+  return res.status(200).send({
+    success: true,
+    error: false,
+    user: arr,
+  });
+});
+
+const dist = (la1, lo1, la2, lo2) => {
+  const R = 6371;
+  const dLat = deg2rad(la2 - la1);
+  const dLon = deg2rad(lo2 - lo1);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(deg2rad(la1)) *
+      Math.cos(deg2rad(la2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const d = R * c; // Distance in km
+  return d;
+};
+
+const deg2rad = (deg) => deg * (Math.PI / 180);

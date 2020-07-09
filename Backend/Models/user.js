@@ -37,9 +37,11 @@ const userSchema = new mongo.Schema({
   },
   latitude: {
     type: String,
+    default: 23.435453454345,
   },
   longitude: {
     type: String,
+    default: 55.54534545345,
   },
 });
 

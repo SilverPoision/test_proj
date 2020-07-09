@@ -11,5 +11,6 @@ router.post("/user/location", verifyAuth, auth.setLat);
 
 router.get("/user/logout", verifyAuth, auth.logout);
 router.get("/user", verifyAuth, auth.user);
+router.get("/user/distance", verifyAuth, auth.caclDist);
 
 module.exports = router;

@@ -1,13 +1,10 @@
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 const generator = require("generate-password");
-const mailBody = require("./misc/mailBody");
 const { catchAsync, AppError } = require("./misc/errorHander");
 const User = require("../Models/user");
 
-const { emailSchema } = require("../Models/validate");
+const { emailSchema, editUserSchema } = require("../Models/validate");
 
 const transport = nodemailer.createTransport({
   service: "gmail",
@@ -20,10 +17,11 @@ const transport = nodemailer.createTransport({
 exports.createUser = catchAsync(async (req, res, next) => {
   const { error } = emailSchema(req.body);
   if (error) {
-    return next(new AppError(error.details[0].message, 400));
+    return next(new AppError(error.details[0].message, 401));
   }
 
-  const email = await User.findOne({ email: req.body.email });
+  const email = await User.findOne({ email: req.body.email, isAdmin: false });
+
   if (email) {
     return next(
       new AppError(
@@ -49,7 +47,7 @@ exports.createUser = catchAsync(async (req, res, next) => {
   const user = new User(userTo);
   user.save();
 
-  res.stats(200).send({
+  res.status(200).send({
     success: true,
     error: false,
     message: "User Created and password sent to user's email!!",
@@ -78,10 +76,16 @@ exports.editUser = catchAsync(async (req, res, next) => {
     password: req.body.password,
   };
 
-  const user = User.findOne({ email: email });
+  const { error } = editUserSchema(req.body);
+
+  if (error) {
+    return next(new AppError(error.details[0].message, 401));
+  }
+
+  const user = await User.findOne({ email: data.email });
 
   if (!user) {
-    return next(new AppError("No user found", 401));
+    return next(new AppError("No user found!!", 401));
   }
 
   const salt = await bcrypt.genSalt(10);
@@ -100,7 +104,13 @@ exports.editUser = catchAsync(async (req, res, next) => {
 exports.deleteUser = catchAsync(async (req, res, next) => {
   const email = req.body.email;
 
-  const user = User.findOneAndDelete({ email: email });
+  const { error } = emailSchema(req.body);
+
+  if (error) {
+    return next(new AppError(error.details[0].message, 401));
+  }
+
+  const user = await User.findOneAndDelete({ email: email, isAdmin: false });
 
   if (!user) {
     return next(new AppError("No user found", 401));
@@ -108,7 +118,7 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
   return res.status(200).send({
     success: true,
     error: false,
-    message: "User Updated",
+    message: "User Deleted!!",
   });
 });
 

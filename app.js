@@ -55,7 +55,7 @@ app.use((err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
 
-  mode = process.env.NODE_ENV;
+  mode = "development";
 
   if (mode === "development") {
     sendErrorDev(err, res);

@@ -269,6 +269,14 @@ exports.caclDist = catchAsync(async (req, res, next) => {
   const currUser = await User.findOne({ _id: req.user._id });
   const user = await User.find({ isAdmin: false });
 
+  const query = parseInt(req.query.dist);
+
+  let area = 2;
+
+  if (query && typeof query == "number") {
+    area = query;
+  }
+
   const arr = [];
 
   user.map((el) => {
@@ -278,9 +286,10 @@ exports.caclDist = catchAsync(async (req, res, next) => {
       el.latitude,
       el.longitude
     );
-    if (km < 2) {
+    if (km < area) {
       arr.push({
         name: el.email.split("@")[0],
+        distance: km,
       });
     }
   });
@@ -289,6 +298,7 @@ exports.caclDist = catchAsync(async (req, res, next) => {
     success: true,
     error: false,
     user: arr,
+    dist: area,
   });
 });
 

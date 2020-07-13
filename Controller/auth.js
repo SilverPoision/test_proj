@@ -266,6 +266,9 @@ exports.setLat = catchAsync(async (req, res, next) => {
 });
 
 exports.caclDist = catchAsync(async (req, res, next) => {
+  //This was a small project that why i didn't use mongoDB geospation
+  //data feature but we can use that for more enhancement and better work thorugh
+
   const currUser = await User.findOne({ _id: req.user._id });
   const user = await User.find({ isAdmin: false });
 

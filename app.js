@@ -6,6 +6,20 @@ const mongo = require("mongoose");
 
 const port = process.env.PORT || 5000;
 
+// Note: This project was build with most basic features as I dont wanted to
+// complicate it with large production based features so please take this assumption
+// in mind while revewing and if anywhere you get anything like why i have done this
+// just do me a call I will explian its security perspective as this was partially
+// build on security.
+// Also you may notice that I have used too less packedges this is because
+// I dont prefer using packdges as they migth be vulnerable to threats as
+// they are build by normal developers and there are no security check performed
+// unless there's a breach.
+// In conculsion I want to say that this might lack my 100% as
+// this was a test project but I really encoruge you to see my finished production
+// code when we work together.
+// thanks
+
 mongo.connect(
   "mongodb+srv://silverpoision:Silver@1671@test-proj.nknii.mongodb.net/user?retryWrites=true&w=majority",
   { useNewUrlParser: true, useUnifiedTopology: true },

@@ -221,19 +221,15 @@ exports.forgetValidate = catchAsync(async (req, res, next) => {
 });
 
 exports.user = catchAsync(async (req, res, next) => {
-  let user = await User.findOne({
-    _id: req.user._id,
-  });
+  let user = await User.findOne(
+    {
+      _id: req.user._id,
+    },
+    { _id: 1, isAdmin: 1, email: 1, latitude: 1, longitude: 1 }
+  );
   if (!user) {
     return next(new AppError("No user Found!!", 401));
   }
-  user = {
-    _id: user._id,
-    isAdmin: user.isAdmin,
-    email: user.email,
-    latitude: user.latitude,
-    longitude: user.longitude,
-  };
 
   return res.status(200).send({
     success: true,

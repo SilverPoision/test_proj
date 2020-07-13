@@ -4,7 +4,7 @@ const adminRoutes = require("./Routes/admin");
 const app = express();
 const mongo = require("mongoose");
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 
 // Note: This project was build with most basic features as I dont wanted to
 // complicate it with large production based features so please take this assumption

@@ -2,12 +2,13 @@
 
 You can find this app hosted here:
 
-https://secret-hamlet-64689.herokuapp.com/
+https://murmuring-coast-29976.herokuapp.com/
 
+I have exposed endpoints for signup and login here:
 
-I have exposed an endpoint for signup here:
+https://murmuring-coast-29976.herokuapp.com/api/user/signup
 
-https://secret-hamlet-64689.herokuapp.com/api/user/signup
+https://murmuring-coast-29976.herokuapp.com/api/user/login
 
 So if you want to signup then send a request with body with json like this.
 
@@ -18,9 +19,9 @@ So if you want to signup then send a request with body with json like this.
 }
 ```
 
-Or if you don't want to signup then just login with this credentials.
+For admin access just login with this credentials.
 
 ```
 Email: piyush1671@gmail.com
-Password: Silver@1671
+Password: Silver@1022
 ```
